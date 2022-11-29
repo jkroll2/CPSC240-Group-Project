@@ -19,5 +19,12 @@ public class BankAccount {
     public int getMoney(){
         return money;
     }
-
+    public int deposit(int amount){
+        money = money + amount;
+        return money;
+    }
+    public int withdraw(int amount){
+        money = money - amount;
+        return money;
+    }
 }
