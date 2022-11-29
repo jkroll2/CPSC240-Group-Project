@@ -7,18 +7,19 @@ import java.io.FileWriter;
 public class Bank {
     private ArrayList<BankAccount> accounts = new ArrayList<>();
 
-    //I'm trying to make this a bit like Assignment 3
-    //the name of the files the accounts' details will be stored in is just the account number, and
-    //they will be in a directory called 'accounts'
-    public void save(BankAccount account) throws IOException {
+    //Creates file directory called accounts if it isn't already there
+    //Creates a .txt file named as the account's number if it isn't already there
+    //Saves the account information in the file
+    public static void save(BankAccount account) throws IOException {
         File file1 = new File("./accounts/");
-        File file2 = new File("./accounts/" + account.getAccountNumber());
+        File file2 = new File("./accounts/" + account.getAccountNumber() + ".txt");
         file1.mkdir();
         file2.createNewFile();
-        PrintWriter pw = new PrintWriter(new FileWriter(String.valueOf(account.getAccountNumber())));
+        PrintWriter pw = new PrintWriter(new FileWriter(file2));
         pw.println(account.getType());
         pw.println(account.getAccountNumber());
         pw.println(account.getMoney());
+        pw.println();
         pw.close();
     }
 
