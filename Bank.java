@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 
+//Bank class
+//Defines a Bank which stores BankAccounts into an ArrayList
+//Has methods to create a Bank, save a BankAccount, add a BankAccount to the ArrayList,
+//get a BankAccount given the account number, get the ArrayList of BankAccounts, and check
+//to see if an account number entered by the user belongs to a BankAccount
 public class Bank {
     private static ArrayList<BankAccount> accounts;
 
@@ -28,10 +33,12 @@ public class Bank {
         pw.close();
     }
 
+    //Add a BankAccount to the ArrayList
     public static void addAccToArrayList(BankAccount account) {
         accounts.add(account);
     }
 
+    //Get a BankAccount given the account number
     public static BankAccount getAccount(int accNumber) {
         int value = -1;
         for (int i=0; i<accounts.size(); i++) {
@@ -47,10 +54,12 @@ public class Bank {
         }
     }
 
+    //Get the ArrayList of BankAccounts
     public static ArrayList<BankAccount> getAccounts() {
         return accounts;
     }
 
+    //Checks whether an account number entered by the user actually belongs to a BankAccount
     public static boolean isValidAccountNumber(int accNumber) {
         boolean isValid = false;
         for (int i=0; i<accounts.size(); i++) {

@@ -5,10 +5,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//ButtonListener class implements ActionListener
+//Has method actionPerformed which checks which button the user pressed and executes code accordingly, such as
+//displaying all BankAccounts, viewing the balance of a particular BankAccount, creating a checking and savings
+//account, depositing to and withdrawing from a BankAccount, and transferring money between two BankAccounts
 class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        //See account balance after inputting account number
+        //Display all accounts
         if (e.getActionCommand().equals("Display Accounts")) {
             ArrayList<BankAccount> accounts = Bank.getAccounts();
             ArrayList<Integer> accountNums = new ArrayList<>();
@@ -17,9 +21,10 @@ class ButtonListener implements ActionListener {
                 accountNums.add(accounts.get(i).getAccountNumber());
                 list = list + accounts.get(i).toString() +"\n";
             }
-            JOptionPane.showMessageDialog(null, list);
+            JOptionPane.showMessageDialog(null, list, "Display Accounts", JOptionPane.INFORMATION_MESSAGE);
         }
 
+        //See account balance after inputting account number
         else if (e.getActionCommand().equals("See Account Balance")) {
             String text = JOptionPane.showInputDialog(null, "Enter your account number to view the balance: ", "See Account Balance", JOptionPane.INFORMATION_MESSAGE);
             try {
@@ -29,16 +34,28 @@ class ButtonListener implements ActionListener {
             }
         }
 
+        //Create a checking account
         else if (e.getActionCommand().equals("Create Checking Account")) {
             BankAccount acount = new BankAccount(AccountType.CHECKING, 0);
             Bank.addAccToArrayList(acount);
-            JOptionPane.showMessageDialog(null, "Created checking account with number: " + acount.getAccountNumber());
+            try {
+                Bank.save(acount);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Cannot access account file of account number: " + acount.getAccountNumber(), "Failure to save account to file", JOptionPane.INFORMATION_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(null, "Created checking account with number: " + acount.getAccountNumber(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
+        //Create a savings account
         else if (e.getActionCommand().equals("Create Savings Account")) {
             BankAccount acount = new BankAccount(AccountType.SAVINGS, 0);
             Bank.addAccToArrayList(acount);
-            JOptionPane.showMessageDialog(null, "Created savings account with number: " + acount.getAccountNumber());
+            try {
+                Bank.save(acount);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Cannot access account file of account number: " + acount.getAccountNumber(), "Failure to save account to file", JOptionPane.INFORMATION_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(null, "Created savings account with number: " + acount.getAccountNumber(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
         //Withdraw from an account
@@ -190,15 +207,15 @@ class ButtonListener implements ActionListener {
     }
 }
 
+//Main class
+//contains main method which creates JFrame, JPanel, and JButton objects
 public class Main {
     public static void main(String[] args) {
         Bank bank = new Bank();
 
         //TEST BANK ACCOUNT 1
-        //I have been using these to test the 'See Account Balance' button and
-        //the 'Withdraw From Account' button, as well as the 'Deposit' and 'Transfer' buttons
+        //I have been using these to test the buttons
         //Note that the account number is automatically set to 1000000 in the BankAccount.java BankAccount() constructor, then incremented
-        //We will need to add a button where the user can create a bank account themselves
         BankAccount acc1 = new BankAccount(AccountType.CHECKING, 158);
         try {
             Bank.addAccToArrayList(acc1);
