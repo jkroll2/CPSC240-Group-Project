@@ -4,7 +4,10 @@ public class BankAccount {
     private  AccountType type;
     private int nextNumber = 1000000;
 
-    public BankAccount(int accountNumber, AccountType type, int money){
+    public BankAccount() {
+
+    }
+    public BankAccount(AccountType type, int money){
         this.accountNumber = nextNumber;
         nextNumber++;
         this.type = type;
