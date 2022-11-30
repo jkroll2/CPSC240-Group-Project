@@ -2,7 +2,7 @@ public class BankAccount {
     private int accountNumber;
     private int money;
     private  AccountType type;
-    private int nextNumber = 1000000;
+    private static int nextNumber = 1000000;
 
     public BankAccount() {
 

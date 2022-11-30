@@ -21,6 +21,9 @@ public class Bank {
         pw.println(account.getMoney());
         pw.println();
         pw.close();
+    }
+
+    public static void addAccToArrayList(BankAccount account) {
         accounts.add(account);
     }
 
@@ -41,6 +44,17 @@ public class Bank {
 
     public static ArrayList<BankAccount> getAccounts() {
         return accounts;
+    }
+
+    public static boolean isValidAccountNumber(int accNumber) {
+        boolean isValid = false;
+        for (int i=0; i<accounts.size(); i++) {
+            if (accounts.get(i).getAccountNumber() == accNumber) {
+                isValid = true;
+                break;
+            }
+        }
+        return isValid;
     }
 
 }
