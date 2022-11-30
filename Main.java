@@ -200,9 +200,10 @@ public class Main {
             System.out.println("IOException");
         }
 
-
         // create and set up the window.
         JFrame frame = new JFrame("Bank Management");
+
+        frame.setSize(600,600);
 
         // make the program close when the window closes
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,7 +211,7 @@ public class Main {
         //makes layout
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(4, 2));
         panel.setMaximumSize(new Dimension(400, 400));
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -219,10 +220,25 @@ public class Main {
         frame.getContentPane().add(label);
 
         //makes each button for each option
+        JButton displayButton = new JButton("Display Accounts");
+        displayButton.addActionListener(new ButtonListener());
+        displayButton.setPreferredSize(new Dimension(400,100));
+        panel.add(displayButton);
+
         JButton balanceButton = new JButton("See Account Balance");
         balanceButton.addActionListener(new ButtonListener());
         balanceButton.setPreferredSize(new Dimension(400,100));
         panel.add(balanceButton);
+
+        JButton createCheckButton = new JButton("Create Checking Account");
+        createCheckButton.addActionListener(new ButtonListener());
+        createCheckButton.setPreferredSize(new Dimension(400,100));
+        panel.add(createCheckButton);
+
+        JButton createSavingsButton = new JButton("Create Savings Account");
+        createSavingsButton.addActionListener(new ButtonListener());
+        createSavingsButton.setPreferredSize(new Dimension(400,100));
+        panel.add(createSavingsButton);
 
         JButton withdrawButton = new JButton("Withdraw From Account");
         withdrawButton.addActionListener(new ButtonListener());
@@ -238,6 +254,20 @@ public class Main {
         transferButton.addActionListener(new ButtonListener());
         transferButton.setPreferredSize(new Dimension(400,100));
         panel.add(transferButton);
+
+        //exits window and closes it when button is pushed
+        JButton exitButton = new JButton("Exit Program");
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+                frame.dispose();
+                frame.setVisible(false);
+            }
+        }
+        );
+        exitButton.setPreferredSize(new Dimension(400,100));
+        panel.add(exitButton);
 
         // display the window.
         frame.setContentPane(panel);
