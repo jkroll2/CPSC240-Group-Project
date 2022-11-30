@@ -7,14 +7,30 @@ import java.io.IOException;
 class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        //displaying the accounts with their account numbers and what type they are
+        if (e.getActionCommand().equals("Display Accounts")) {
+            //adding action event
+        }
+
         //See account balance after inputting account number
-        if (e.getActionCommand().equals("See Account Balance")) {
+        else if (e.getActionCommand().equals("See Account Balance")) {
             String text = JOptionPane.showInputDialog(null, "Enter your account number to view the balance: ", "See Account Balance", JOptionPane.INFORMATION_MESSAGE);
             try {
                 JOptionPane.showMessageDialog(null, "Balance: " + Bank.getAccount(Integer.parseInt(text)).getMoney(), "View Balance", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException | NumberFormatException n) {
                 JOptionPane.showMessageDialog(null, "Not a valid account number.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
+        }
+
+        //creating a checking account
+        else if (e.getActionCommand().equals("Create Checking Account")) {
+            //adding action event
+        }
+
+        //creating a savings account
+        else if (e.getActionCommand().equals("Create Savings Account")) {
+            //adding action event 
         }
 
         //Withdraw from an account
