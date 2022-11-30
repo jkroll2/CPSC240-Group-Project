@@ -5,7 +5,12 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 
 public class Bank {
-    private static ArrayList<BankAccount> accounts = new ArrayList<>();
+    private static ArrayList<BankAccount> accounts;
+
+    //initializes the arraylist and opens a bank object
+    public Bank(){
+        accounts = new ArrayList<>();
+    }
 
     //Creates file directory called accounts if it isn't already there
     //Creates a .txt file named as the account's number if it isn't already there

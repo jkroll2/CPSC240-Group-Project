@@ -3,17 +3,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        //displaying the accounts with their account numbers and what type they are
+        //See account balance after inputting account number
         if (e.getActionCommand().equals("Display Accounts")) {
-            //adding action event
+            ArrayList<BankAccount> accounts = Bank.getAccounts();
+            ArrayList<Integer> accountNums = new ArrayList<>();
+            String list = "";
+            for (int i = 0; i < accounts.size(); i++){
+                accountNums.add(accounts.get(i).getAccountNumber());
+                list = list + accounts.get(i).toString() +"\n";
+            }
+            JOptionPane.showMessageDialog(null, list);
         }
 
-        //See account balance after inputting account number
         else if (e.getActionCommand().equals("See Account Balance")) {
             String text = JOptionPane.showInputDialog(null, "Enter your account number to view the balance: ", "See Account Balance", JOptionPane.INFORMATION_MESSAGE);
             try {
@@ -23,14 +29,16 @@ class ButtonListener implements ActionListener {
             }
         }
 
-        //creating a checking account
         else if (e.getActionCommand().equals("Create Checking Account")) {
-            //adding action event
+            BankAccount acount = new BankAccount(AccountType.CHECKING, 0);
+            Bank.addAccToArrayList(acount);
+            JOptionPane.showMessageDialog(null, "Created checking account with number: " + acount.getAccountNumber());
         }
 
-        //creating a savings account
         else if (e.getActionCommand().equals("Create Savings Account")) {
-            //adding action event 
+            BankAccount acount = new BankAccount(AccountType.SAVINGS, 0);
+            Bank.addAccToArrayList(acount);
+            JOptionPane.showMessageDialog(null, "Created savings account with number: " + acount.getAccountNumber());
         }
 
         //Withdraw from an account
@@ -184,6 +192,7 @@ class ButtonListener implements ActionListener {
 
 public class Main {
     public static void main(String[] args) {
+        Bank bank = new Bank();
 
         //TEST BANK ACCOUNT 1
         //I have been using these to test the 'See Account Balance' button and
@@ -291,4 +300,3 @@ public class Main {
         frame.setVisible(true);
     }
 }
-
