@@ -1,7 +1,7 @@
 //BankAccount class
 //Contains constructors and methods to get an account number, get the AccountType
 //of a BankAccount, get the balance of a BankAccount, deposit and withdraw money into
-//a BankAccount, and print the BankAccount object in a readable format
+//a BankAccount, and print the BankAccount object in a readable format.
 public class BankAccount {
     private int accountNumber;
     private int money;

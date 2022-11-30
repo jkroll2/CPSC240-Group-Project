@@ -8,7 +8,7 @@ import java.util.ArrayList;
 //ButtonListener class implements ActionListener
 //Has method actionPerformed which checks which button the user pressed and executes code accordingly, such as
 //displaying all BankAccounts, viewing the balance of a particular BankAccount, creating a checking and savings
-//account, depositing to and withdrawing from a BankAccount, and transferring money between two BankAccounts
+//account, depositing to and withdrawing from a BankAccount, and transferring money between two BankAccounts.
 class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {

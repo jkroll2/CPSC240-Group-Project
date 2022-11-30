@@ -8,7 +8,7 @@ import java.io.FileWriter;
 //Defines a Bank which stores BankAccounts into an ArrayList
 //Has methods to create a Bank, save a BankAccount, add a BankAccount to the ArrayList,
 //get a BankAccount given the account number, get the ArrayList of BankAccounts, and check
-//to see if an account number entered by the user belongs to a BankAccount
+//to see if an account number entered by the user belongs to a BankAccount.
 public class Bank {
     private static ArrayList<BankAccount> accounts;
 
