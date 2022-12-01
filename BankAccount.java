@@ -63,6 +63,6 @@ public class BankAccount {
     //prints account object in readable format
     @Override
     public String toString(){
-        return "Account Number: " + this.getAccountNumber() + " -- Type: " + this.getType() + " -- Balance " + "$"+ this.getMoney();
+        return "Account Number: " + this.getAccountNumber() + " -- Type: " + this.getType();
     }
 }

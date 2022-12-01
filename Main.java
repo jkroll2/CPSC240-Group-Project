@@ -199,7 +199,7 @@ class ButtonListener implements ActionListener {
                         if (j <= Bank.getAccount(Integer.parseInt(text)).getMoney()) {
                             Bank.getAccount(Integer.parseInt(text)).withdraw(Integer.parseInt(text3));
                             Bank.getAccount(Integer.parseInt(text2)).deposit(Integer.parseInt(text3));
-                            JOptionPane.showMessageDialog(null, "Amount Transferred", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Amount Transferred ", "Success", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Cannot withdraw amount because there is not enough money in the bank.", "Failure to withdraw and deposit", JOptionPane.INFORMATION_MESSAGE);
                         }
