@@ -274,6 +274,8 @@ public class Main {
         frame.getContentPane().add(label);
         frame.setBackground(new Color(218, 219, 217));
 
+        Border blackLine = BorderFactory.createLineBorder(Color.BLACK);
+
         //makes each button for each option
         JButton displayButton = new JButton("Display Accounts");
         displayButton.addActionListener(new ButtonListener());
