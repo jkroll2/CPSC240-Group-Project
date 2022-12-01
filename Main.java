@@ -1,28 +1,18 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+//ButtonListener class implements ActionListener
+//Has method actionPerformed which checks which button the user pressed and executes code accordingly, such as
+//displaying all BankAccounts, viewing the balance of a particular BankAccount, creating a checking and savings
+//account, depositing to and withdrawing from a BankAccount, and transferring money between two BankAccounts.
 class ButtonListener implements ActionListener {
-    //displays all the files in the accounts directory
-    public static ArrayList<String> getAccountFiles(){
-        File dir = new File("./accounts/");
-        ArrayList<String> accountList = new ArrayList<String>(Arrays.asList(dir.list()));
-
-        for (int i = 0; i < accountList.size(); i++){
-            System.out.println((i +1) + ": " + accountList.get(i));
-        }
-
-        return accountList;
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        //See account balance after inputting account number
+        //Display all accounts
         if (e.getActionCommand().equals("Display Accounts")) {
             ArrayList<BankAccount> accounts = Bank.getAccounts();
             ArrayList<Integer> accountNums = new ArrayList<>();
@@ -31,9 +21,10 @@ class ButtonListener implements ActionListener {
                 accountNums.add(accounts.get(i).getAccountNumber());
                 list = list + accounts.get(i).toString() +"\n";
             }
-            JOptionPane.showMessageDialog(null, list);
+            JOptionPane.showMessageDialog(null, list, "Display Accounts", JOptionPane.INFORMATION_MESSAGE);
         }
 
+        //See account balance after inputting account number
         else if (e.getActionCommand().equals("See Account Balance")) {
             String text = JOptionPane.showInputDialog(null, "Enter your account number to view the balance: ", "See Account Balance", JOptionPane.INFORMATION_MESSAGE);
             try {
@@ -43,18 +34,28 @@ class ButtonListener implements ActionListener {
             }
         }
 
-        //creates a checking account with a new account number
+        //Create a checking account
         else if (e.getActionCommand().equals("Create Checking Account")) {
             BankAccount acount = new BankAccount(AccountType.CHECKING, 0);
             Bank.addAccToArrayList(acount);
-            JOptionPane.showMessageDialog(null, "Created checking account with number: " + acount.getAccountNumber());
+            try {
+                Bank.save(acount);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Cannot access account file of account number: " + acount.getAccountNumber(), "Failure to save account to file", JOptionPane.INFORMATION_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(null, "Created checking account with number: " + acount.getAccountNumber(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        //creates a savings account with a new account number
+        //Create a savings account
         else if (e.getActionCommand().equals("Create Savings Account")) {
             BankAccount acount = new BankAccount(AccountType.SAVINGS, 0);
             Bank.addAccToArrayList(acount);
-            JOptionPane.showMessageDialog(null, "Created savings account with number: " + acount.getAccountNumber());
+            try {
+                Bank.save(acount);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Cannot access account file of account number: " + acount.getAccountNumber(), "Failure to save account to file", JOptionPane.INFORMATION_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(null, "Created savings account with number: " + acount.getAccountNumber(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
         //Withdraw from an account
@@ -206,15 +207,15 @@ class ButtonListener implements ActionListener {
     }
 }
 
+//Main class
+//contains main method which creates JFrame, JPanel, and JButton objects
 public class Main {
     public static void main(String[] args) {
         Bank bank = new Bank();
 
         //TEST BANK ACCOUNT 1
-        //I have been using these to test the 'See Account Balance' button and
-        //the 'Withdraw From Account' button, as well as the 'Deposit' and 'Transfer' buttons
+        //I have been using these to test the buttons
         //Note that the account number is automatically set to 1000000 in the BankAccount.java BankAccount() constructor, then incremented
-        //We will need to add a button where the user can create a bank account themselves
         BankAccount acc1 = new BankAccount(AccountType.CHECKING, 158);
         try {
             Bank.addAccToArrayList(acc1);
@@ -252,86 +253,48 @@ public class Main {
         //makes layout
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setLayout(new GridLayout(4, 2, 5,5));
+        panel.setLayout(new GridLayout(4, 2));
         panel.setMaximumSize(new Dimension(400, 400));
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
         //makes label for top of window
         JLabel label = new JLabel("Welcome to Bank Management");
         frame.getContentPane().add(label);
-        frame.setBackground(new Color(218, 219, 217));
-
-        Border blackLine = BorderFactory.createLineBorder(Color.BLACK);
 
         //makes each button for each option
         JButton displayButton = new JButton("Display Accounts");
         displayButton.addActionListener(new ButtonListener());
         displayButton.setPreferredSize(new Dimension(400,100));
-        displayButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        displayButton.setOpaque(true);
-        displayButton.setBackground(new Color(154, 186, 128));
-        displayButton.setForeground(Color.BLACK);
-        displayButton.setBorder(blackLine);
         panel.add(displayButton);
 
         JButton balanceButton = new JButton("See Account Balance");
         balanceButton.addActionListener(new ButtonListener());
         balanceButton.setPreferredSize(new Dimension(400,100));
-        balanceButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        balanceButton.setOpaque(true);
-        balanceButton.setBackground(new Color(154, 186, 128));
-        balanceButton.setForeground(Color.BLACK);
-        balanceButton.setBorder(blackLine);
         panel.add(balanceButton);
 
         JButton createCheckButton = new JButton("Create Checking Account");
         createCheckButton.addActionListener(new ButtonListener());
         createCheckButton.setPreferredSize(new Dimension(400,100));
-        createCheckButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        createCheckButton.setOpaque(true);
-        createCheckButton.setBackground(new Color(154, 186, 128));
-        createCheckButton.setForeground(Color.BLACK);
-        createCheckButton.setBorder(blackLine);
         panel.add(createCheckButton);
 
         JButton createSavingsButton = new JButton("Create Savings Account");
         createSavingsButton.addActionListener(new ButtonListener());
         createSavingsButton.setPreferredSize(new Dimension(400,100));
-        createSavingsButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        createSavingsButton.setOpaque(true);
-        createSavingsButton.setBackground(new Color(154, 186, 128));
-        createSavingsButton.setForeground(Color.BLACK);
-        createSavingsButton.setBorder(blackLine);
         panel.add(createSavingsButton);
 
         JButton withdrawButton = new JButton("Withdraw From Account");
         withdrawButton.addActionListener(new ButtonListener());
         withdrawButton.setPreferredSize(new Dimension(400,100));
-        withdrawButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        withdrawButton.setOpaque(true);
-        withdrawButton.setBackground(new Color(154, 186, 128));
-        withdrawButton.setForeground(Color.BLACK);
-        withdrawButton.setBorder(blackLine);
         panel.add(withdrawButton);
 
         JButton depositButton = new JButton("Deposit Into Account");
         depositButton.addActionListener(new ButtonListener());
         depositButton.setPreferredSize(new Dimension(400,100));
-        depositButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        depositButton.setOpaque(true);
-        depositButton.setBackground(new Color(154, 186, 128));
-        depositButton.setForeground(Color.BLACK);
-        depositButton.setBorder(blackLine);
         panel.add(depositButton);
 
         JButton transferButton = new JButton("Transfer Money Between Accounts");
         transferButton.addActionListener(new ButtonListener());
         transferButton.setPreferredSize(new Dimension(400,100));
-        transferButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        transferButton.setOpaque(true);
-        transferButton.setBackground(new Color(154, 186, 128));
-        transferButton.setForeground(Color.BLACK);
-        transferButton.setBorder(blackLine);
         panel.add(transferButton);
 
         //exits window and closes it when button is pushed
@@ -346,11 +309,6 @@ public class Main {
         }
         );
         exitButton.setPreferredSize(new Dimension(400,100));
-        exitButton.setFont(new Font("Georgia", Font.PLAIN, 25));
-        exitButton.setBorder(blackLine);
-        exitButton.setOpaque(true);
-        exitButton.setBackground(new Color(154, 186, 128));
-        exitButton.setForeground(Color.BLACK);
         panel.add(exitButton);
 
         // display the window.

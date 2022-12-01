@@ -10,6 +10,9 @@ public class BankAccount {
 
     //created default empty bank account
     public BankAccount() {
+        while (Bank.isValidAccountNumber(nextNumber)) {
+            nextNumber++;
+        }
         accountNumber = nextNumber;
         nextNumber++;
         type = null;
@@ -19,8 +22,18 @@ public class BankAccount {
     //Takes in AccountType and amount of money
     //Sets the account number, type, and money
     public BankAccount(AccountType type, int money){
+        while (Bank.isValidAccountNumber(nextNumber)) {
+            nextNumber++;
+        }
         this.accountNumber = nextNumber;
         nextNumber++;
+        this.type = type;
+        this.money = money;
+    }
+    //Second non-default constructor in which the account number is NOT automatically
+    //generated, but is instead read in from a file. Also sets the type and money.
+    public BankAccount(int accountNumber, AccountType type, int money){
+        this.accountNumber = accountNumber;
         this.type = type;
         this.money = money;
     }
