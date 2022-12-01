@@ -208,10 +208,15 @@ class ButtonListener implements ActionListener {
 }
 
 //Main class
-//contains main method which creates JFrame, JPanel, and JButton objects
+//contains main method which creates JFrame, JPanel, and JButton objects and adds any existing accounts in ./accounts/ to the Bank
 public class Main {
     public static void main(String[] args) {
         Bank bank = new Bank();
+        try {
+            Bank.addAlreadyExistingAccounts();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Could not access account files.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
 
         //TEST BANK ACCOUNT 1
         //I have been using these to test the buttons

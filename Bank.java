@@ -1,8 +1,6 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.io.PrintWriter;
-import java.io.FileWriter;
+import java.util.Scanner;
 
 //Bank class
 //Defines a Bank which stores BankAccounts into an ArrayList
@@ -51,6 +49,42 @@ public class Bank {
             return null;
         } else {
             return accounts.get(value);
+        }
+    }
+
+    //Gets any account files in ./accounts/ that aren't already in the accounts ArrayList and adds them to it
+    public static void addAlreadyExistingAccounts() throws IOException {
+        File accountFiles = new File("./accounts/");
+        accountFiles.mkdir();
+        String[] accountNames = accountFiles.list();
+
+        for (int i=0; i<accountNames.length; i++) {
+            System.out.println(accountNames[i].substring(0, 7));
+        }
+
+
+        if (accountNames != null) {
+            if (accountNames.length > 0) {
+                for (int i = 0; i < accountNames.length; i++) {
+                    if (!isValidAccountNumber(Integer.parseInt(accountNames[i].substring(0, 7)))) {
+                        Scanner scan = new Scanner(new FileReader("./accounts/" + accountNames[i]));
+                        String accTypeStr = scan.nextLine();
+                        AccountType accType = null;
+                        if (accTypeStr.equals("SAVINGS")) {
+                            accType = AccountType.SAVINGS;
+                        } else if (accTypeStr.equals("CHECKING")) {
+                            accType = AccountType.CHECKING;
+                        } else if (accTypeStr.equals("CERTIFICATE")) {
+                            accType = AccountType.CERTIFICATE;
+                        }
+                        int accNumber = Integer.parseInt(scan.nextLine());
+                        int money = Integer.parseInt(scan.nextLine());
+
+                        BankAccount account = new BankAccount(accNumber, accType, money);
+                        accounts.add(account);
+                    }
+                }
+            }
         }
     }
 
