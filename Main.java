@@ -42,7 +42,7 @@ class ButtonListener implements ActionListener {
         else if (e.getActionCommand().equals("See Account Balance")) {
             String text = JOptionPane.showInputDialog(null, "Enter your account number to view the balance: ", "See Account Balance", JOptionPane.INFORMATION_MESSAGE);
             try {
-                JOptionPane.showMessageDialog(null, "Balance: " + Bank.getAccount(Integer.parseInt(text)).getMoney(), "View Balance", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Balance: " + " $" + Bank.getAccount(Integer.parseInt(text)).getMoney(), "View Balance", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException | NumberFormatException n) {
                 JOptionPane.showMessageDialog(null, "Not a valid account number.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -97,7 +97,7 @@ class ButtonListener implements ActionListener {
                         isValidWithdrawAmount = true;
                         if (k <= Bank.getAccount(Integer.parseInt(text)).getMoney()) {
                             Bank.getAccount(Integer.parseInt(text)).withdraw(Integer.parseInt(text2));
-                            JOptionPane.showMessageDialog(null, "Amount Withdrawn", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Amount Withdrawn" + " New Balance = " + " $" + Bank.getAccount(Integer.parseInt(text)).getMoney(), "Success", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Cannot withdraw amount because there is not enough money in the bank.", "Failure to withdraw", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -140,7 +140,7 @@ class ButtonListener implements ActionListener {
                         isValidDepositAmount = true;
                         Bank.getAccount(Integer.parseInt(text)).deposit(Integer.parseInt(text2));
                         Bank.save(Bank.getAccount(Integer.parseInt(text)));
-                        JOptionPane.showMessageDialog(null, "Amount Deposited", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Amount Deposited" + " New Balance = " + " $" + Bank.getAccount(Integer.parseInt(text)).getMoney(), "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Not a valid input.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -199,7 +199,7 @@ class ButtonListener implements ActionListener {
                         if (j <= Bank.getAccount(Integer.parseInt(text)).getMoney()) {
                             Bank.getAccount(Integer.parseInt(text)).withdraw(Integer.parseInt(text3));
                             Bank.getAccount(Integer.parseInt(text2)).deposit(Integer.parseInt(text3));
-                            JOptionPane.showMessageDialog(null, "Amount Transferred ", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Amount Transferred " + " New Balance = " + " $" + Bank.getAccount(Integer.parseInt(text)).getMoney(), "Success", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Cannot withdraw amount because there is not enough money in the bank.", "Failure to withdraw and deposit", JOptionPane.INFORMATION_MESSAGE);
                         }
