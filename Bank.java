@@ -58,11 +58,6 @@ public class Bank {
         accountFiles.mkdir();
         String[] accountNames = accountFiles.list();
 
-        for (int i=0; i<accountNames.length; i++) {
-            System.out.println(accountNames[i].substring(0, 7));
-        }
-
-
         if (accountNames != null) {
             if (accountNames.length > 0) {
                 for (int i = 0; i < accountNames.length; i++) {

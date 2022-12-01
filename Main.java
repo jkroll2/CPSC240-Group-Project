@@ -226,31 +226,43 @@ class ButtonListener implements ActionListener {
 public class Main {
     public static void main(String[] args) {
         Bank bank = new Bank();
+        try {
+            Bank.addAlreadyExistingAccounts();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Could not access account files.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
 
         //TEST BANK ACCOUNT 1
-        //I have been using these to test the buttons
-        //Note that the account number is automatically set to 1000000 in the BankAccount.java BankAccount() constructor, then incremented
-        BankAccount acc1 = new BankAccount(AccountType.CHECKING, 158);
+        //I have been using these test accounts to test the buttons
+        //NOTE: these accounts (including their respective values and files) will be overwritten each time to program starts.
+        //In an actual, non-testing run of the program, this wouldn't be a problem because these test accounts wouldn't be here.
+        BankAccount acc1 = new BankAccount(1000000, AccountType.CHECKING, 158);
         try {
-            Bank.addAccToArrayList(acc1);
+            if (!Bank.isValidAccountNumber(acc1.getAccountNumber())) {
+                Bank.addAccToArrayList(acc1);
+            }
             Bank.save(acc1);
         } catch (IOException e) {
             System.out.println("IOException");
         }
 
         //TEST BANK ACCOUNT 2
-        BankAccount acc2 = new BankAccount(AccountType.SAVINGS, 341);
+        BankAccount acc2 = new BankAccount(1000001, AccountType.SAVINGS, 341);
         try {
-            Bank.addAccToArrayList(acc2);
+            if (!Bank.isValidAccountNumber(acc2.getAccountNumber())) {
+                Bank.addAccToArrayList(acc2);
+            }
             Bank.save(acc2);
         } catch (IOException e) {
             System.out.println("IOException");
         }
 
         //TEST BANK ACCOUNT 3
-        BankAccount acc3 = new BankAccount(AccountType.CHECKING, 200);
+        BankAccount acc3 = new BankAccount(1000002, AccountType.CHECKING, 200);
         try {
-            Bank.addAccToArrayList(acc3);
+            if (!Bank.isValidAccountNumber(acc3.getAccountNumber())) {
+                Bank.addAccToArrayList(acc3);
+            }
             Bank.save(acc3);
         } catch (IOException e) {
             System.out.println("IOException");
